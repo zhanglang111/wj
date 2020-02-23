@@ -1,6 +1,7 @@
 package com.evan.wj.Mapper;
 
 import com.evan.wj.Pojo.Book;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -38,5 +39,12 @@ public interface BookMapper {
     @Insert("INSERT INTO book(book.cover,book.title,book.author,book.date,book.press,book.abs,book.cid) VALUES(" +
             "#{cover},#{title},#{author},#{date},#{press},#{abs},#{cid})")
     public int addBook(Book book);
+
+    @Delete("DELETE FROM book WHERE book.id = #{id}")
+    public int deleteBookById(int id);
+
+
+
+    public List<Book> searchBooksByKeyword(String keywords);
 
 }

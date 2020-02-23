@@ -13,4 +13,6 @@ import java.util.List;
 public interface BookService {
     List<Book> findAllByCategory(int cid);
     List<Book> getAllBooks();
+    public int addBook(Book book);
+    public int deleteBookById(int id);
 }

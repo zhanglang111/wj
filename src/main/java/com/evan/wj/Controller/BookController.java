@@ -46,4 +46,16 @@ public class BookController {
         }
         return jsonObjectList;
     }
+
+    @PostMapping("/addBook")
+    public int addBook(@RequestBody Book book){
+        int i= bookService.addBook(book);
+        return i;
+    }
+
+    @GetMapping("/deleteBookById/{id}")
+    public int deleteBookById(@PathVariable int id){
+        int i= bookService.deleteBookById(id);
+        return i;
+    }
 }
