@@ -44,7 +44,7 @@ public interface BookMapper {
     public int deleteBookById(int id);
 
 
-
+    @Select("SELECT * FROM book WHERE book.title LIKE concat('%',#{keywords},'%')")
     public List<Book> searchBooksByKeyword(String keywords);
 
 }

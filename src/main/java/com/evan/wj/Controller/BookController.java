@@ -58,4 +58,12 @@ public class BookController {
         int i= bookService.deleteBookById(id);
         return i;
     }
+
+    @PostMapping("/searchBooksByKeyword")
+    public Object searchBooksByKeyword(@RequestBody String keywords){
+        //把一个参数写两遍？
+
+        List<Book> books = bookService.searchBooksByKeyword(keywords);
+        return books;
+    }
 }

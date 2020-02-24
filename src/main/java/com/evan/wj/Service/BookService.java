@@ -1,7 +1,6 @@
 package com.evan.wj.Service;
 
 import com.evan.wj.Pojo.Book;
-import com.evan.wj.Pojo.Category;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,4 +14,5 @@ public interface BookService {
     List<Book> getAllBooks();
     public int addBook(Book book);
     public int deleteBookById(int id);
+    public List<Book> searchBooksByKeyword(String keywords);
 }
