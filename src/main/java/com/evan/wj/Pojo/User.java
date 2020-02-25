@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Code by langlang on 2020/2/22
@@ -17,10 +16,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user")
 public class User {
-    int id;
-    String username;
-    String password;
-    String name;
-    String email;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    private String username;
+    private String password;
+    private String salt;
+    private String name;
+    private String phone;
+    private String email;
+    private boolean enabled;
+//    @Transient
+//    private List<AdminRole> roles;
+
 }
 

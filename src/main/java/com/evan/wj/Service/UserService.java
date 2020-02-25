@@ -10,4 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
     public User getUserByname(String username);
+
+    public int register(User user);
+
 }
