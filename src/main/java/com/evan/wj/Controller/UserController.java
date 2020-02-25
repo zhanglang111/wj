@@ -4,8 +4,13 @@ import com.evan.wj.Pojo.User;
 import com.evan.wj.Service.UserService;
 import com.evan.wj.Utils.Result;
 import com.evan.wj.Utils.ResultUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
@@ -22,6 +27,27 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @PostMapping("/user/Login")
+    public Result login(@RequestBody User user) {
+        // 对 html 标签进行转义，防止 XSS 攻击
+        String username = user.getUsername();
+        username = HtmlUtils.htmlEscape(username);
+        Subject subject = SecurityUtils.getSubject();
+
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username,user.getPassword());
+
+        if(userService.getUserByname(username)!=null){
+            return ResultUtil.error(304,"用户名以被占用");
+        }
+        try {
+            subject.login(usernamePasswordToken);
+            return ResultUtil.OK();
+        }catch (UnknownAccountException e){
+            return ResultUtil.error(304,"用户名不存在");
+        }catch (IncorrectCredentialsException e){
+            return ResultUtil.error(304,"密码错误");
+        }
+    }
 
     //用户注册
     @PostMapping("/user/Register")
@@ -60,6 +86,8 @@ public class UserController {
         user.setPassword(encodedPassword);
         if(userService.register(user)!=0){
             return ResultUtil.OK();
+        }else{
+            return ResultUtil.error(500,"注册失败");
         }
     }
 }
