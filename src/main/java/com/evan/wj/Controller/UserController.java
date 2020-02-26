@@ -4,6 +4,7 @@ import com.evan.wj.Pojo.User;
 import com.evan.wj.Service.UserService;
 import com.evan.wj.Utils.Result;
 import com.evan.wj.Utils.ResultUtil;
+import com.sun.xml.internal.txw2.output.ResultFactory;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -20,14 +21,14 @@ import org.springframework.web.util.HtmlUtils;
  */
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 @CrossOrigin
 public class UserController {
 
     @Autowired
     UserService userService;
 
-    @PostMapping("/user/Login")
+    @PostMapping("/Login")
     public Result login(@RequestBody User user) {
         // 对 html 标签进行转义，防止 XSS 攻击
         String username = user.getUsername();
@@ -50,7 +51,7 @@ public class UserController {
     }
 
     //用户注册
-    @PostMapping("/user/Register")
+    @PostMapping("/Register")
     public Object Register(@RequestBody User user){
         // 对 html 标签进行转义，防止 XSS 攻击
         String username = user.getUsername();
@@ -89,5 +90,14 @@ public class UserController {
         }else{
             return ResultUtil.error(500,"注册失败");
         }
+    }
+
+
+    @GetMapping("/logout")
+    public Result logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        String message = "成功登出";
+        return ResultUtil.OK(message);
     }
 }
