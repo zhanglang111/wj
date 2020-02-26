@@ -33,12 +33,12 @@ public class UserController {
         String username = user.getUsername();
         username = HtmlUtils.htmlEscape(username);
         Subject subject = SecurityUtils.getSubject();
+        String password = user.getPassword();
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username,password);
 
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username,user.getPassword());
-
-        if(userService.getUserByname(username)!=null){
-            return ResultUtil.error(304,"用户名以被占用");
-        }
+//        if(userService.getUserByname(username)!=null){
+//            return ResultUtil.error(304,"用户名以被占用");
+//        }
         try {
             subject.login(usernamePasswordToken);
             return ResultUtil.OK();

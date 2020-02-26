@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface UserMapper {
-    @Select("SELECT `user`.username, `user`.`name`, `user`.phone, `user`.email FROM `user` WHERE `user`.`username` = #{username}")
+    @Select("SELECT `user`.username,`user`.password,`user`.salt, `user`.`name`, `user`.phone, `user`.email FROM `user` WHERE `user`.`username` = #{username}")
     public User getUserByname(String username);
 
     @Insert("INSERT INTO `user`(`user`.username,`user`.`password`,`user`.salt,`user`.name,`user`.phone,`user`.email,`user`.enabled) \n" +
