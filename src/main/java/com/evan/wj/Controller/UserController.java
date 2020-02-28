@@ -4,7 +4,6 @@ import com.evan.wj.Pojo.User;
 import com.evan.wj.Service.UserService;
 import com.evan.wj.Utils.Result;
 import com.evan.wj.Utils.ResultUtil;
-import com.sun.xml.internal.txw2.output.ResultFactory;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -36,13 +35,13 @@ public class UserController {
         Subject subject = SecurityUtils.getSubject();
         String password = user.getPassword();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username,password);
-
+        usernamePasswordToken.setRememberMe(true);
 //        if(userService.getUserByname(username)!=null){
 //            return ResultUtil.error(304,"用户名以被占用");
 //        }
         try {
             subject.login(usernamePasswordToken);
-            return ResultUtil.OK();
+            return ResultUtil.OK(usernamePasswordToken);
         }catch (UnknownAccountException e){
             return ResultUtil.error(304,"用户名不存在");
         }catch (IncorrectCredentialsException e){
@@ -99,5 +98,11 @@ public class UserController {
         subject.logout();
         String message = "成功登出";
         return ResultUtil.OK(message);
+    }
+
+    @GetMapping(value = "/authentication")
+    public String authentication(){
+        System.out.println("登陆");
+        return null;
     }
 }

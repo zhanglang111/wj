@@ -13,4 +13,10 @@ public interface UserService {
 
     public int register(User user);
 
+    public int EnableStatus(int value,int id);
+
+    public int UpdateUserInfo(User user);
+
+    public int resetPassword(User user);
+
 }

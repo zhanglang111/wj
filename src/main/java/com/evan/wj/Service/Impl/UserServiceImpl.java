@@ -25,4 +25,19 @@ public class UserServiceImpl implements UserService {
     public int register(User user) {
         return userMapper.register(user);
     }
+
+    @Override
+    public int EnableStatus(int value,int id) {
+        return userMapper.EnableStatus(value,id);
+    }
+
+    @Override
+    public int UpdateUserInfo(User user) {
+        return userMapper.UpdateUserInfo(user);
+    }
+
+    @Override
+    public int resetPassword(User user) {
+        return userMapper.resetPassword(user);
+    }
 }

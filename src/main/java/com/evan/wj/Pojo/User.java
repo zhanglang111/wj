@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Code by langlang on 2020/2/22
@@ -27,8 +28,8 @@ public class User {
     private String phone;
     private String email;
     private boolean enabled;
-//    @Transient
-//    private List<AdminRole> roles;
+    @Transient
+    private List<AdminRole> roles;
 
 }
 

@@ -3,6 +3,7 @@ package com.evan.wj.Controller;
 import com.alibaba.fastjson.JSONArray;
 import com.evan.wj.Pojo.jotterArticle;
 import com.evan.wj.Service.ArticleService;
+import com.evan.wj.Utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,12 +45,10 @@ public class ArticleController {
         List<jotterArticle> allArticlelist = articleService.getArticleList();
         JSONArray jsonArray1 = (JSONArray) JSONArray.toJSON(articlelist);
         JSONArray jsonArray2 = (JSONArray) JSONArray.toJSON(allArticlelist);
-////        String articlelistString = jsonArray1.toString();
-////        String allArticlelistString = jsonArray2.toString();
-////        List<String> stringList = new ArrayList<>();
 
         jsonObjectList.add(jsonArray1);
         jsonObjectList.add(jsonArray2);
-        return jsonObjectList;
+
+        return ResultUtil.OK(jsonObjectList);
     }
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.evan.wj.Pojo.Book;
 import com.evan.wj.Service.BookService;
 import com.evan.wj.Service.CategoryService;
+import com.evan.wj.Utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,10 +54,13 @@ public class BookController {
         return i;
     }
 
-    @GetMapping("/deleteBookById/{id}")
-    public int deleteBookById(@PathVariable int id){
-        int i= bookService.deleteBookById(id);
-        return i;
+    @PostMapping("/admin/content/books/delete/{id}")
+    public Object deleteBookById(@PathVariable int id){
+        if(bookService.deleteBookById(id)!=0){
+            return ResultUtil.OK();
+        }else{
+            return ResultUtil.error(500,"删除失败");
+        }
     }
 
     @PostMapping("/searchBooksByKeyword")
