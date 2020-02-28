@@ -1,18 +1,15 @@
 package com.evan.wj.Controller;
 
-import com.evan.wj.Pojo.AdminRole;
-import com.evan.wj.Pojo.AdminUserRole;
-import com.evan.wj.Pojo.User;
-import com.evan.wj.Service.AdminRoleService;
-import com.evan.wj.Service.AdminService;
-import com.evan.wj.Service.AdminUserRoleService;
-import com.evan.wj.Service.UserService;
+import com.evan.wj.Pojo.*;
+import com.evan.wj.Service.*;
 import com.evan.wj.Utils.ResultUtil;
+import com.evan.wj.result.Result;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.Role;
 import java.util.List;
 
 /**
@@ -33,6 +30,21 @@ public class adminController {
     @Autowired
     AdminUserRoleService adminUserRoleService;
 
+    @Autowired
+    AdminPermissionService adminPermissionService;
+
+    @Autowired
+    AdminMenuService adminMenuService;
+
+    @Autowired
+    AdminRoleService adminRoleService;
+
+    @Autowired
+    AdminRoleMenuService adminRoleMenuService;
+
+    @Autowired
+    AdminRolePermissionService adminRolePermissionService;
+
     //获取系统中的所有用户
     @GetMapping("/user")
     public Object getAllUser(){
@@ -51,6 +63,27 @@ public class adminController {
         return ResultUtil.OK(users);
     }
 
+    @GetMapping("/rolesWithDetail")
+    public Object rolesWithDetail() {
+        //获取所有json每一个角色下所有的权限
+        List<AdminRole> adminRoles = adminPermissionService.listRolesWithPermsWithMenu();
+        return ResultUtil.OK(adminRoles);
+    }
+
+    @GetMapping("/role/perm")
+    public Object listPerms() {
+        //获取所有json每一个角色下所有的权限
+        List<AdminPermission> adminPermissions = adminPermissionService.listPerms();
+        return ResultUtil.OK(adminPermissions);
+    }
+
+    @GetMapping("/role/menu")
+    public Object listMenus() {
+        //获取所有json每一个角色下所有的权限
+        List<AdminMenu> adminMenus = adminMenuService.listMenus();
+        return ResultUtil.OK(adminMenus);
+    }
+
     @PostMapping("/deleteUserInfo")
     public Object deleteUserInfo(@RequestBody User requestUser){
         if(adminService.deleteUserInfo(requestUser.getId())!=0){
@@ -64,9 +97,38 @@ public class adminController {
         }
     }
 
+    @PostMapping("/deleteRoleInfo")
+    public Object deleteRoleInfo(@RequestBody AdminRole requestRole){
+        int Rid = requestRole.getId();
+        adminRoleService.deleteRoleInfo(Rid);
+        adminRolePermissionService.deleteRolePerms(Rid);
+        adminRoleMenuService.deleteRoleMenu(Rid);
+        return ResultUtil.OK();
+    }
+
+    //启用或者禁用角色的状态
+    @PostMapping("/role/status")
+    public Object EnableRoleStatus(@RequestBody AdminRole requestRole){
+        if(adminRoleService.EnableStatus(requestRole.isEnabled(),requestRole.getId())!=0){
+            return ResultUtil.OK();
+        }else{
+            return ResultUtil.error(304,"error");
+        }
+    }
+
+    @PostMapping("/user/UpdateRoleInfo")
+    public Object UpdateRoleInfo(@RequestBody AdminRole requestRole){
+        //修改角色信息
+        adminRoleService.UpdateRoleInfo(requestRole);
+        adminPermissionService.editRolePerms(requestRole.getId(),requestRole.getPerms());
+        adminRoleMenuService.editRoleMenu(requestRole.getId(),requestRole.getMenus())
+        return ResultUtil.OK();
+
+    }
+
     //启用或者禁用用户的状态
     @PostMapping("/user/status")
-    public Object EnableStatus(@RequestBody User requestUser){
+    public Object EnableUserStatus(@RequestBody User requestUser){
         if(userService.EnableStatus(requestUser.isEnabled(),requestUser.getId())!=0){
             return ResultUtil.OK();
         }else{

@@ -72,6 +72,11 @@ public class AdminMenuServiceImpl implements AdminMenuService {
         return adminMenuMapper.getMenusByRoleId(Rid);
     }
 
+    @Override
+    public List<AdminMenu> listMenus() {
+        return adminMenuMapper.listMenus();
+    }
+
     public void handleMenus(List<AdminMenu> menus) {
         for (AdminMenu menu : menus) {
             //将父节点的所有子节点找出来。

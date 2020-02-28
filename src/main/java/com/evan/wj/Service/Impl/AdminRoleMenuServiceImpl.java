@@ -1,6 +1,7 @@
 package com.evan.wj.Service.Impl;
 
 import com.evan.wj.Mapper.AdminRoleMenuMapper;
+import com.evan.wj.Pojo.AdminMenu;
 import com.evan.wj.Pojo.AdminRoleMenu;
 import com.evan.wj.Service.AdminRoleMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,18 @@ public class AdminRoleMenuServiceImpl implements AdminRoleMenuService {
     @Override
     public List<AdminRoleMenu> findAllByRid(int Rid) {
         return adminRoleMenuMapper.findAllByRid(Rid);
+    }
+
+    @Override
+    public int deleteRoleMenu(int Rid) {
+        return 0;
+    }
+
+    @Override
+    public void editRoleMenu(int Rid, List<AdminMenu> adminMenus) {
+        adminRoleMenuMapper.deleteRoleMenu(Rid);
+        for (AdminMenu adminMenu:adminMenus) {
+            adminRoleMenuMapper.editRoleMenu(Rid,adminMenu.getId());
+        }
     }
 }

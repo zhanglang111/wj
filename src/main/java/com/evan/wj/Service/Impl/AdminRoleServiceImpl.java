@@ -46,6 +46,21 @@ public class AdminRoleServiceImpl implements AdminRoleService {
         return roles;
     }
 
+    @Override
+    public int deleteRoleInfo(int Rid) {
+        return adminRoleMapper.deleteRole(Rid);
+    }
+
+    @Override
+    public int EnableStatus(boolean value, int Rid) {
+        return adminRoleMapper.EnableStatus(value,Rid);
+    }
+
+    @Override
+    public int UpdateRoleInfo(AdminRole adminRole) {
+        return 0;
+    }
+
     public List<AdminRole> findAll(){
         return adminRoleMapper.findAll();
     }

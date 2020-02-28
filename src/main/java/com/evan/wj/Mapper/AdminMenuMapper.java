@@ -20,4 +20,7 @@ public interface AdminMenuMapper {
 
     @Select("SELECT admin_menu.* FROM admin_role_menu, admin_menu WHERE admin_role_menu.mid = admin_menu.id AND admin_role_menu.rid = #{Rid}")
     List<AdminMenu> getMenusByRoleId(int Rid);
+
+    @Select("SELECT admin_menu.* FROM admin_menu")
+    public List<AdminMenu> listMenus();
 }

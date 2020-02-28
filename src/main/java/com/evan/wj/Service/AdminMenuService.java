@@ -18,4 +18,6 @@ public interface AdminMenuService {
 
     public List<AdminMenu> getMenusByRoleId(int Rid);
 
+    public List<AdminMenu> listMenus();
+
 }
