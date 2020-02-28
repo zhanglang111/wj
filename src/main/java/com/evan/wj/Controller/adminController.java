@@ -66,8 +66,8 @@ public class adminController {
 
     //启用或者禁用用户的状态
     @PostMapping("/user/status")
-    public Object EnableStatus(@RequestBody int value,int id){
-        if(userService.EnableStatus(value,id)!=0){
+    public Object EnableStatus(@RequestBody User requestUser){
+        if(userService.EnableStatus(requestUser.isEnabled(),requestUser.getId())!=0){
             return ResultUtil.OK();
         }else{
             return ResultUtil.error(304,"error");

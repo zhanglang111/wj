@@ -13,7 +13,7 @@ public interface UserService {
 
     public int register(User user);
 
-    public int EnableStatus(int value,int id);
+    public int EnableStatus(boolean value,int id);
 
     public int UpdateUserInfo(User user);
 

@@ -19,7 +19,7 @@ public interface UserMapper {
     public int register(User user);
 
     @Update("UPDATE `user` SET `user`.enabled = #{value} WHERE `user`.id = #{id}")
-    public int EnableStatus(int value,int id);
+    public int EnableStatus(boolean value,int id);
 
     @Update("UPDATE `user` SET `user` .email = #{email},`user` .phone = #{phone},`user` .name = #{name} WHERE `user` .username = #{username}")
     public int UpdateUserInfo(User user);
