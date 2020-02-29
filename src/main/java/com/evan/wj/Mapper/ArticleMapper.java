@@ -1,6 +1,7 @@
 package com.evan.wj.Mapper;
 
 import com.evan.wj.Pojo.jotterArticle;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -24,4 +25,7 @@ public interface ArticleMapper {
 
     @Select("SELECT * FROM jotter_article LIMIT #{startPageindex},#{pageSize}")
     public List<jotterArticle>  getArticleByPage(int startPageindex,int pageSize);
+
+    @Delete("DELETE FROM jotter_article WHERE jotter_article.id = #{aid}")
+    public void deleteArticle(int aid);
 }

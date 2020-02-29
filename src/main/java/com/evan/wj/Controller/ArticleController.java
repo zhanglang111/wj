@@ -1,6 +1,7 @@
 package com.evan.wj.Controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.evan.wj.Pojo.jotterArticle;
 import com.evan.wj.Service.ArticleService;
 import com.evan.wj.Utils.ResultUtil;
@@ -40,15 +41,24 @@ public class ArticleController {
     @GetMapping("/article/{pageSize}/{page}")
     public Object getArticleList(@PathVariable int pageSize,@PathVariable int page){
 
-        List<JSONArray> jsonObjectList = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject();
         List<jotterArticle> articlelist = articleService.getArticleByPage(page, pageSize);
         List<jotterArticle> allArticlelist = articleService.getArticleList();
         JSONArray jsonArray1 = (JSONArray) JSONArray.toJSON(articlelist);
         JSONArray jsonArray2 = (JSONArray) JSONArray.toJSON(allArticlelist);
 
-        jsonObjectList.add(jsonArray1);
-        jsonObjectList.add(jsonArray2);
+        jsonObject.put("content",jsonArray1);
+        jsonObject.put("totalElements",jsonArray2);
 
-        return ResultUtil.OK(jsonObjectList);
+        return ResultUtil.OK(jsonObject);
     }
+
+    //删除文章
+
+    @DeleteMapping("/admin/content/article/{id}")
+    public Object deleteArticle(@PathVariable int id){
+        articleService.deleteArticle(id);
+        return ResultUtil.OK();
+    }
+
 }

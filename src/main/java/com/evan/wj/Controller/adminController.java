@@ -3,13 +3,12 @@ package com.evan.wj.Controller;
 import com.evan.wj.Pojo.*;
 import com.evan.wj.Service.*;
 import com.evan.wj.Utils.ResultUtil;
-import com.evan.wj.result.Result;
+
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.relation.Role;
 import java.util.List;
 
 /**
@@ -116,12 +115,12 @@ public class adminController {
         }
     }
 
-    @PostMapping("/user/UpdateRoleInfo")
+    @PostMapping("/role/UpdateRoleInfo")
     public Object UpdateRoleInfo(@RequestBody AdminRole requestRole){
         //修改角色信息
         adminRoleService.UpdateRoleInfo(requestRole);
         adminPermissionService.editRolePerms(requestRole.getId(),requestRole.getPerms());
-        adminRoleMenuService.editRoleMenu(requestRole.getId(),requestRole.getMenus())
+        adminRoleMenuService.editRoleMenu(requestRole.getId(),requestRole.getMenus());
         return ResultUtil.OK();
 
     }

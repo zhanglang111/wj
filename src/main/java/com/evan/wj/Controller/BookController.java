@@ -54,9 +54,9 @@ public class BookController {
         return i;
     }
 
-    @PostMapping("/admin/content/books/delete/{id}")
-    public Object deleteBookById(@PathVariable int id){
-        if(bookService.deleteBookById(id)!=0){
+    @PostMapping("/admin/content/books/delete")
+    public Object deleteBookById(@RequestBody Book book){
+        if(bookService.deleteBookById(book.getId())!=0){
             return ResultUtil.OK();
         }else{
             return ResultUtil.error(500,"删除失败");

@@ -36,4 +36,9 @@ public class ArticleServiceImpl implements ArticleService {
         int startPageindex = (pageNo-1)*pageSize;
         return articleMapper.getArticleByPage(startPageindex,pageSize);
     }
+
+    @Override
+    public void deleteArticle(int aid) {
+        articleMapper.deleteArticle(aid);
+    }
 }

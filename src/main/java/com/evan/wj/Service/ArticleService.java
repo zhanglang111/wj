@@ -18,4 +18,6 @@ public interface ArticleService {
     public jotterArticle getArticleDetail(int id);
 
     public List<jotterArticle>  getArticleByPage(int pageNo,int pageSize);
+
+    public void deleteArticle(int aid);
 }
