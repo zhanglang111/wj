@@ -60,5 +60,4 @@ public class ArticleController {
         articleService.deleteArticle(id);
         return ResultUtil.OK();
     }
-
 }
